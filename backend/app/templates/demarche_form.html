@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}Nouvelle démarche{% endblock %}
+{% block content %}
+<div class="max-w-xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+    <h1 class="text-xl font-title text-primary mb-6 flex items-center gap-2">
+        <i data-lucide="plus" class="w-5 h-5"></i> Nouvelle démarche
+    </h1>
+
+    <form method="post" action="/demarches/new" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium mb-1">Titre</label>
+            <input type="text" name="title" required class="w-full border border-slate-300 rounded-lg px-3 py-2"
+                   placeholder="ex: Renouveler le passeport de Léo">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Description</label>
+            <textarea name="description" rows="3" class="w-full border border-slate-300 rounded-lg px-3 py-2"
+                      placeholder="Détails, contexte..."></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Catégorie</label>
+                <select name="category_id" required class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    {% for c in categories %}
+                    <option value="{{ c.id }}">{{ c.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Personne concernée</label>
+                <select name="person_id" required class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    {% for p in people %}
+                    <option value="{{ p.id }}">{{ p.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Deadline (optionnel)</label>
+            <input type="date" name="deadline" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+        </div>
+
+        <div class="border border-primary/20 bg-primary/5 rounded-xl p-3 flex items-start gap-2">
+            <input type="checkbox" name="use_ai" id="use_ai" checked class="mt-1">
+            <label for="use_ai" class="text-sm text-primary flex items-start gap-1.5">
+                <i data-lucide="sparkles" class="w-4 h-4 mt-0.5 shrink-0"></i>
+                Laisser l'IA estimer automatiquement la difficulté, le temps nécessaire et générer un guide
+                d'étapes pour cette démarche.
+            </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Difficulté (si pas d'IA)</label>
+                <select name="difficulty" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    <option value="">— Laisser l'IA choisir —</option>
+                    <option value="facile">Facile</option>
+                    <option value="moyen">Moyen</option>
+                    <option value="difficile">Difficile</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Temps estimé (min, si pas d'IA)</label>
+                <input type="number" name="estimated_minutes" min="0" value="0"
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2">
+            </div>
+        </div>
+
+        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-lg py-2.5 font-medium hover:bg-primary-600">
+            <i data-lucide="check" class="w-4 h-4"></i> Créer la démarche
+        </button>
+    </form>
+</div>
+{% endblock %}

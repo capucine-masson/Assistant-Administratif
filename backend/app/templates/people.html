@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block title %}Personnes{% endblock %}
+{% block content %}
+<h1 class="text-xl font-title text-primary mb-4 flex items-center gap-2">
+    <i data-lucide="users" class="w-5 h-5"></i> Personnes du foyer
+</h1>
+<p class="text-sm text-slate-500 mb-4">
+    Ajoutez les membres de votre foyer (conjoint, enfants...) pour pouvoir leur associer des démarches
+    et filtrer par personne.
+</p>
+
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    {% for p in people %}
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+            <span class="flex items-center justify-center w-9 h-9 rounded-xl bg-primary/10 text-primary">
+                <i data-lucide="user" class="w-4 h-4"></i>
+            </span>
+            <div>
+                <p class="font-medium">{{ p.name }}</p>
+                <p class="text-xs text-slate-400">{{ p.relation }}</p>
+            </div>
+        </div>
+        {% if p.relation != 'moi' and not p.demarches %}
+        <form method="post" action="/people/{{ p.id }}/delete" onsubmit="return confirm('Supprimer ?');">
+            <button class="text-slate-300 hover:text-red-500"><i data-lucide="trash" class="w-4 h-4"></i></button>
+        </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</div>
+
+<div class="bg-white rounded-2xl border border-slate-200 p-4 max-w-md">
+    <h2 class="font-title text-primary mb-3 flex items-center gap-2">
+        <i data-lucide="plus" class="w-4 h-4"></i> Ajouter une personne
+    </h2>
+    <form method="post" action="/people/new" class="flex items-center gap-2">
+        <input type="text" name="name" required placeholder="Prénom" class="flex-1 border border-slate-300 rounded-lg px-2 py-1.5">
+        <select name="relation" class="border border-slate-300 rounded-lg px-2 py-1.5">
+            <option value="conjoint">Conjoint(e)</option>
+            <option value="enfant">Enfant</option>
+            <option value="parent">Parent</option>
+            <option value="autre">Autre</option>
+        </select>
+        <button class="text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">Ajouter</button>
+    </form>
+</div>
+{% endblock %}

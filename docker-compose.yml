@@ -1,0 +1,31 @@
+services:
+  backend:
+    build: ./backend
+    container_name: assistant_admin_backend
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    expose:
+      - "8000"
+    restart: unless-stopped
+
+  scraper:
+    build: ./scraper
+    container_name: assistant_admin_scraper
+    profiles: ["tools"]
+    volumes:
+      - ./data:/data
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: assistant_admin_nginx
+    depends_on:
+      - backend
+    environment:
+      - APP_PORT=${APP_PORT:-9090}
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates:ro
+    ports:
+      - "${APP_PORT:-9090}:80"
+    restart: unless-stopped

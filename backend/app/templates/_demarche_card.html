@@ -1,0 +1,45 @@
+{% set status_labels = {"a_faire": "À faire", "en_cours": "En cours", "terminee": "Terminée"} %}
+{% set status_icons = {"a_faire": "circle", "en_cours": "loader-circle", "terminee": "circle-check-big"} %}
+{% set status_colors = {"a_faire": "bg-slate-100 text-slate-600", "en_cours": "bg-amber/15 text-sunset", "terminee": "bg-primary/10 text-primary"} %}
+{% set difficulty_dot = {"facile": "bg-emerald-500", "moyen": "bg-amber", "difficile": "bg-sunset"} %}
+{% set difficulty_labels = {"facile": "Facile", "moyen": "Moyen", "difficile": "Difficile"} %}
+
+<a href="/demarches/{{ demarche.id }}"
+   class="block bg-white rounded-2xl border {{ 'border-red-300' if demarche.is_overdue else 'border-slate-200' }} p-4 hover:shadow-md hover:border-primary/30 transition">
+    <div class="flex items-start justify-between gap-2">
+        <div class="flex items-center gap-2.5">
+            {% if demarche.category %}
+            <span class="flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
+                  style="background-color: {{ demarche.category.color }}1a; color: {{ demarche.category.color }};">
+                <i data-lucide="{{ demarche.category.icon }}" class="w-4 h-4"></i>
+            </span>
+            {% endif %}
+            <div>
+                <h3 class="font-semibold text-slate-800">{{ demarche.title }}</h3>
+                <p class="text-xs text-slate-400">
+                    {% if demarche.category %}{{ demarche.category.name }}{% endif %}
+                    {% if demarche.person %} · {{ demarche.person.name }}{% endif %}
+                </p>
+            </div>
+        </div>
+        <span class="flex items-center gap-1 text-xs px-2 py-1 rounded-full whitespace-nowrap {{ status_colors[demarche.status] }}">
+            <i data-lucide="{{ status_icons[demarche.status] }}" class="w-3 h-3"></i>
+            {{ status_labels[demarche.status] }}
+        </span>
+    </div>
+
+    <div class="mt-3 flex flex-wrap items-center gap-3 text-xs text-slate-500">
+        <span class="flex items-center gap-1">
+            <span class="w-2 h-2 rounded-full {{ difficulty_dot.get(demarche.difficulty, 'bg-slate-400') }}"></span>
+            {{ difficulty_labels.get(demarche.difficulty, demarche.difficulty) }}
+        </span>
+        <span class="flex items-center gap-1"><i data-lucide="timer" class="w-3.5 h-3.5"></i> ~{{ demarche.estimated_minutes }} min</span>
+        {% if demarche.deadline %}
+        <span class="flex items-center gap-1 {{ 'text-red-600 font-medium' if demarche.is_overdue else '' }}">
+            <i data-lucide="{{ 'triangle-alert' if demarche.is_overdue else 'calendar' }}" class="w-3.5 h-3.5"></i>
+            {{ demarche.deadline | fr_date }}{% if demarche.is_overdue %} (en retard){% endif %}
+        </span>
+        {% endif %}
+        <span class="flex items-center gap-1"><i data-lucide="gift" class="w-3.5 h-3.5"></i> {{ demarche.points_reward }} pts</span>
+    </div>
+</a>

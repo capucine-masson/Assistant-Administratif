@@ -1,0 +1,37 @@
+<div class="bg-white rounded-2xl border border-slate-200 p-3 mb-5 flex flex-wrap items-center gap-3">
+    <div class="flex bg-slate-100 rounded-xl p-1">
+        <a href="?view=list{{ '&category_id=' ~ filters.category_id if filters.category_id }}{{ '&person_id=' ~ filters.person_id if filters.person_id }}{{ '&status=' ~ filters.status if filters.status }}"
+           class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium {{ 'bg-white shadow text-primary' if view == 'list' else 'text-slate-500' }}">
+            <i data-lucide="list" class="w-4 h-4"></i> Liste
+        </a>
+        <a href="?view=calendar{{ '&category_id=' ~ filters.category_id if filters.category_id }}{{ '&person_id=' ~ filters.person_id if filters.person_id }}{{ '&status=' ~ filters.status if filters.status }}"
+           class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium {{ 'bg-white shadow text-primary' if view == 'calendar' else 'text-slate-500' }}">
+            <i data-lucide="calendar-days" class="w-4 h-4"></i> Calendrier
+        </a>
+    </div>
+
+    <form method="get" class="flex flex-wrap items-center gap-2 ml-auto">
+        <input type="hidden" name="view" value="{{ view }}">
+        <select name="category_id" onchange="this.form.submit()" class="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+            <option value="">Toutes catégories</option>
+            {% for c in categories %}
+            <option value="{{ c.id }}" {{ 'selected' if filters.category_id == c.id }}>{{ c.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="person_id" onchange="this.form.submit()" class="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+            <option value="">Toutes les personnes</option>
+            {% for p in people %}
+            <option value="{{ p.id }}" {{ 'selected' if filters.person_id == p.id }}>{{ p.name }}</option>
+            {% endfor %}
+        </select>
+        <select name="status" onchange="this.form.submit()" class="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+            <option value="">Tous statuts</option>
+            <option value="a_faire" {{ 'selected' if filters.status == 'a_faire' }}>À faire</option>
+            <option value="en_cours" {{ 'selected' if filters.status == 'en_cours' }}>En cours</option>
+            <option value="terminee" {{ 'selected' if filters.status == 'terminee' }}>Terminée</option>
+        </select>
+        {% if filters.category_id or filters.person_id or filters.status %}
+        <a href="?view={{ view }}" class="text-sm text-slate-400 hover:text-primary">Réinitialiser</a>
+        {% endif %}
+    </form>
+</div>

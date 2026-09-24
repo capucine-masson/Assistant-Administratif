@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Calendrier des démarches{% endblock %}
+{% block content %}
+
+<div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+    <div class="flex flex-wrap gap-2 text-sm">
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200">
+            <i data-lucide="list-checks" class="w-4 h-4 text-primary"></i> {{ demarches|length }} démarches
+        </span>
+        {% if counts.overdue %}
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-100 text-red-700">
+            <i data-lucide="triangle-alert" class="w-4 h-4"></i> {{ counts.overdue }} en retard
+        </span>
+        {% endif %}
+    </div>
+    <a href="/demarches/new" class="flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-600">
+        <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle démarche
+    </a>
+</div>
+
+{% include "_filters_bar.html" %}
+
+<div class="bg-white rounded-2xl border border-slate-200 p-4">
+    <div id="calendar"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+    var params = new URLSearchParams({
+        {% if filters.category_id %}category_id: "{{ filters.category_id }}",{% endif %}
+        {% if filters.person_id %}person_id: "{{ filters.person_id }}",{% endif %}
+        {% if filters.status %}status: "{{ filters.status }}",{% endif %}
+    });
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        locale: 'fr',
+        height: 'auto',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,multiMonthSixMonths,multiMonthYear,listMonth',
+        },
+        views: {
+            multiMonthSixMonths: {
+                type: 'multiMonth',
+                duration: { months: 6 },
+                multiMonthMaxColumns: 3,
+            },
+        },
+        buttonText: {
+            month: 'Mois',
+            multiMonthSixMonths: '6 mois',
+            multiMonthYear: 'Année',
+            list: 'Liste',
+        },
+        events: '/api/demarches/calendar?' + params.toString(),
+    });
+    calendar.render();
+});
+</script>
+{% endblock %}

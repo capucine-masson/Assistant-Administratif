@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Mes démarches{% endblock %}
+{% block content %}
+
+<div class="flex items-center justify-between flex-wrap gap-3 mb-4">
+    <div class="flex flex-wrap gap-2 text-sm">
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white border border-slate-200">
+            <i data-lucide="list-checks" class="w-4 h-4 text-primary"></i> {{ demarches|length }} démarches
+        </span>
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 text-slate-600">
+            <i data-lucide="circle" class="w-4 h-4"></i> {{ counts.a_faire }} à faire
+        </span>
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-amber/15 text-sunset">
+            <i data-lucide="loader-circle" class="w-4 h-4"></i> {{ counts.en_cours }} en cours
+        </span>
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary/10 text-primary">
+            <i data-lucide="circle-check-big" class="w-4 h-4"></i> {{ counts.terminee }} terminées
+        </span>
+        {% if counts.overdue %}
+        <span class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-red-100 text-red-700">
+            <i data-lucide="triangle-alert" class="w-4 h-4"></i> {{ counts.overdue }} en retard
+        </span>
+        {% endif %}
+    </div>
+    <a href="/demarches/new" class="flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-600">
+        <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle démarche
+    </a>
+</div>
+
+{% include "_filters_bar.html" %}
+
+{% if not demarches %}
+<div class="text-center py-16 text-slate-400">
+    <i data-lucide="sparkles" class="w-8 h-8 mx-auto mb-2 text-secondary"></i>
+    <p class="text-lg">Aucune démarche pour l'instant</p>
+    <a href="/demarches/new" class="text-primary hover:underline">Ajouter une démarche</a>
+</div>
+{% endif %}
+
+{% if grouped %}
+<div class="flex gap-4 overflow-x-auto pb-4 items-start">
+    {% for category_name, items in grouped.items() %}
+    <div class="w-80 shrink-0 bg-slate-100/70 rounded-2xl p-3">
+        <h2 class="flex items-center gap-2 text-sm font-semibold text-slate-500 uppercase tracking-wide mb-3 px-1">
+            <i data-lucide="{{ items[0].category.icon if items[0].category else 'folder' }}" class="w-4 h-4"
+               {% if items[0].category %}style="color: {{ items[0].category.color }};"{% endif %}></i>
+            {{ category_name }}
+            <span class="text-slate-400 font-normal">({{ items|length }})</span>
+        </h2>
+        <div class="flex flex-col gap-3">
+            {% for demarche in items %}
+                {% include "_demarche_card.html" %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% endblock %}

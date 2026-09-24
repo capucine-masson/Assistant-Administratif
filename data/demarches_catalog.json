@@ -1,0 +1,761 @@
+{
+  "last_updated": "2026-09-24T03:49:22Z",
+  "demarches": [
+    {
+      "id": "impots_declaration_revenus",
+      "title": "Déclaration annuelle de revenus",
+      "category": "Impôts",
+      "conditions": {
+        "min_age": 18
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 45,
+      "deadline_rule": {
+        "type": "yearly",
+        "month": 5,
+        "day": 25
+      },
+      "description": "Déclarer ses revenus de l'année précédente aux impôts, obligatoire pour tout foyer fiscal.",
+      "detailed_guide": "1. Connectez-vous à votre espace particulier sur impots.gouv.fr avec votre numéro fiscal.\n2. Vérifiez et complétez la déclaration pré-remplie (salaires, revenus fonciers, etc.).\n3. Signalez tout changement de situation (mariage, enfant, déménagement).\n4. Signez électroniquement avant la date limite (variable selon votre département).\n5. Conservez l'avis d'imposition reçu quelques semaines après.",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Déclarer ses revenus",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F358"
+        },
+        {
+          "label": "Impots.gouv.fr - Espace particulier",
+          "url": "https://www.impots.gouv.fr/accueil"
+        }
+      ],
+      "steps": [
+        "Rassembler les justificatifs de revenus",
+        "Se connecter sur impots.gouv.fr",
+        "Vérifier la déclaration pré-remplie",
+        "Signer et valider",
+        "Conserver l'avis d'imposition"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F358",
+          "title": "Impôt sur le revenu - Déclaration de revenus annuelle | Service Public",
+          "meta_description": "Vous devez faire votre déclaration de revenus aux impôts (parfois appelée déclaration d'impôt) chaque année si votre domicile fiscal est en France.",
+          "content_hash": "bbdcd5329835ca1c1804240352a277c978c8c0d3481b2aaf293d7165391df4e4",
+          "fetched_at": "2026-09-24T03:48:22Z"
+        },
+        {
+          "url": "https://www.impots.gouv.fr/accueil",
+          "title": "Accueil impots.gouv.fr | impots.gouv.fr",
+          "meta_description": null,
+          "content_hash": "ee966fc0b6658e9eaf964e0238caa4e3c9e1ddd8550fd2360b9ea07ff0be8fde",
+          "fetched_at": "2026-09-24T03:48:24Z"
+        }
+      ]
+    },
+    {
+      "id": "impots_prelevement_source",
+      "title": "Gérer son prélèvement à la source",
+      "category": "Impôts",
+      "conditions": {
+        "min_age": 18
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 15,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Mettre à jour son taux de prélèvement à la source en cas de changement de situation ou de revenus.",
+      "detailed_guide": "1. Connectez-vous à votre espace impots.gouv.fr.\n2. Rubrique 'Gérer mon prélèvement à la source'.\n3. Déclarez un changement de revenus ou de situation familiale si nécessaire.\n4. Le nouveau taux est appliqué sous 1 à 3 mois.",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Prélèvement à la source",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F34009"
+        }
+      ],
+      "steps": [
+        "Se connecter à l'espace particulier",
+        "Vérifier le taux actuel",
+        "Signaler un changement si besoin"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F34009",
+          "title": "Impôt sur le revenu - Prélèvement à la source | Service Public",
+          "meta_description": "L'impôt sur le revenu est prélevé à la source, en même temps que la perception des revenus (salaire, pension par exemple). Le taux peut être modifié.",
+          "content_hash": "71ea71c9287de4286aa473498d9d7e191911a5209601e2373ab582dd93506da5",
+          "fetched_at": "2026-09-24T03:48:26Z"
+        }
+      ]
+    },
+    {
+      "id": "identite_carte_nationale",
+      "title": "Renouveler sa carte nationale d'identité",
+      "category": "Identité",
+      "conditions": {
+        "always": true
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 90,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Faire une première demande ou un renouvellement de carte nationale d'identité.",
+      "detailed_guide": "1. Faites une pré-demande en ligne sur l'ANTS pour gagner du temps.\n2. Rassemblez les pièces justificatives (photo d'identité, justificatif de domicile, ancien titre).\n3. Prenez rendez-vous en mairie équipée d'un dispositif de recueil.\n4. Présentez-vous au rendez-vous avec l'original des documents.\n5. Récupérez votre titre en mairie quand il est prêt (SMS/email de notification).",
+      "official_urls": [
+        {
+          "label": "ANTS - Pré-demande CNI",
+          "url": "https://www.ants.gouv.fr/monespace/mon-compte"
+        },
+        {
+          "label": "Service-public.fr - Carte d'identité",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N358"
+        }
+      ],
+      "steps": [
+        "Faire la pré-demande en ligne",
+        "Prendre RDV en mairie",
+        "Se présenter avec les justificatifs",
+        "Récupérer le titre"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.ants.gouv.fr/monespace/mon-compte",
+          "title": null,
+          "meta_description": null,
+          "content_hash": "151b1179c26c4a03e076d0fe4a32fc2682f8fb92bbdda22b9cb877793d4b085a",
+          "fetched_at": "2026-09-24T03:48:29Z"
+        },
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N358",
+          "title": "Carte d'identité | Service Public",
+          "meta_description": "Pour demander une carte d'identité, les pièces à fournir dépendent de la situation (adulte ou enfant, possession d'un passeport...)",
+          "content_hash": "2faec87d7c5b41e219e3e4140d41eb4765074e1bc7558587d958d52758e24e6d",
+          "fetched_at": "2026-09-24T03:48:31Z"
+        }
+      ]
+    },
+    {
+      "id": "identite_passeport",
+      "title": "Renouveler ou demander un passeport",
+      "category": "Identité",
+      "conditions": {
+        "always": true
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 90,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Première demande ou renouvellement de passeport, notamment avant un voyage à l'étranger.",
+      "detailed_guide": "1. Vérifiez la date de validité de votre passeport actuel avant tout voyage.\n2. Faites la pré-demande en ligne sur le site de l'ANTS.\n3. Prenez rendez-vous en mairie (délais parfois longs, anticipez).\n4. Apportez photo, justificatif de domicile et timbre fiscal (achat en ligne ou bureau de tabac).\n5. Récupérez le passeport en mairie.",
+      "official_urls": [
+        {
+          "label": "ANTS - Pré-demande passeport",
+          "url": "https://www.ants.gouv.fr/monespace/mon-compte"
+        },
+        {
+          "label": "Service-public.fr - Passeport",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N360"
+        }
+      ],
+      "steps": [
+        "Vérifier la date d'expiration",
+        "Faire la pré-demande en ligne",
+        "Acheter le timbre fiscal",
+        "Prendre RDV en mairie",
+        "Récupérer le passeport"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.ants.gouv.fr/monespace/mon-compte",
+          "title": null,
+          "meta_description": null,
+          "content_hash": "151b1179c26c4a03e076d0fe4a32fc2682f8fb92bbdda22b9cb877793d4b085a",
+          "fetched_at": "2026-09-24T03:48:33Z"
+        },
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N360",
+          "title": "Passeport | Service Public",
+          "meta_description": "Pour faire un passeport, les documents dépendent de la situation : majeur ou mineur, première demande ou renouvellement, possession (ou non) d’une carte d’identité ... Vous pouvez faire une pré-demande. Elle permet de gagner du temps lors du dépôt du dossier. Le délai pour faire le passeport dépend de la période et du lieu.",
+          "content_hash": "e11530055b68066790725d78e0223b72ac0613c3a5bb123d266add5237217324",
+          "fetched_at": "2026-09-24T03:48:35Z"
+        }
+      ]
+    },
+    {
+      "id": "permis_premiere_demande",
+      "title": "Passer le permis de conduire",
+      "category": "Permis & Véhicule",
+      "conditions": {
+        "has_permis": false,
+        "min_age": 15,
+        "max_age": 30
+      },
+      "difficulty": "difficile",
+      "estimated_minutes": 600,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "S'inscrire en auto-école, passer le code puis la conduite pour obtenir le permis B.",
+      "detailed_guide": "1. Créez votre dossier via une auto-école ou en candidat libre (ANTS).\n2. Préparez et passez l'examen du code de la route.\n3. Suivez les heures de conduite obligatoires (20h minimum en filière classique).\n4. Passez l'examen pratique.\n5. Recevez votre permis (format carte plastique envoyé par courrier).",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Permis de conduire",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N400"
+        },
+        {
+          "label": "ANTS - Suivi du dossier permis",
+          "url": "https://www.ants.gouv.fr/monespace/mon-compte"
+        }
+      ],
+      "steps": [
+        "Créer le dossier NEPH",
+        "Réviser et passer le code",
+        "Suivre les heures de conduite",
+        "Passer l'examen pratique",
+        "Recevoir le titre"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N400",
+          "error": "404 Client Error: Not Found for url: https://www.service-public.gouv.fr/particuliers/vosdroits/N400",
+          "fetched_at": "2026-09-24T03:48:38Z"
+        },
+        {
+          "url": "https://www.ants.gouv.fr/monespace/mon-compte",
+          "title": null,
+          "meta_description": null,
+          "content_hash": "151b1179c26c4a03e076d0fe4a32fc2682f8fb92bbdda22b9cb877793d4b085a",
+          "fetched_at": "2026-09-24T03:48:40Z"
+        }
+      ]
+    },
+    {
+      "id": "vehicule_carte_grise",
+      "title": "Faire sa carte grise (certificat d'immatriculation)",
+      "category": "Permis & Véhicule",
+      "conditions": {
+        "has_vehicle": true
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 30,
+      "deadline_rule": {
+        "type": "relative_days",
+        "days": 30
+      },
+      "description": "Immatriculer un véhicule neuf ou d'occasion dans le délai légal d'un mois après achat.",
+      "detailed_guide": "1. Rassemblez la facture d'achat ou le certificat de cession et le contrôle technique si besoin.\n2. Rendez-vous sur le site de l'ANTS, rubrique immatriculation.\n3. Payez la taxe de carte grise en ligne.\n4. Recevez le certificat provisoire puis la carte grise définitive par courrier.",
+      "official_urls": [
+        {
+          "label": "ANTS - Immatriculation",
+          "url": "https://immatriculation.ants.gouv.fr/"
+        },
+        {
+          "label": "Service-public.fr - Carte grise",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N15928"
+        }
+      ],
+      "steps": [
+        "Rassembler les documents du véhicule",
+        "Faire la demande sur l'ANTS",
+        "Payer la taxe",
+        "Recevoir la carte grise"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://immatriculation.ants.gouv.fr/",
+          "title": null,
+          "meta_description": null,
+          "content_hash": "151b1179c26c4a03e076d0fe4a32fc2682f8fb92bbdda22b9cb877793d4b085a",
+          "fetched_at": "2026-09-24T03:48:42Z"
+        },
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N15928",
+          "error": "404 Client Error: Not Found for url: https://www.service-public.gouv.fr/particuliers/vosdroits/N15928",
+          "fetched_at": "2026-09-24T03:48:44Z"
+        }
+      ]
+    },
+    {
+      "id": "vehicule_controle_technique",
+      "title": "Passer le contrôle technique",
+      "category": "Permis & Véhicule",
+      "conditions": {
+        "has_vehicle": true
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 45,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Contrôle technique obligatoire pour les véhicules de plus de 4 ans, à renouveler tous les 2 ans.",
+      "detailed_guide": "1. Prenez rendez-vous dans un centre de contrôle technique agréé.\n2. Présentez-vous avec la carte grise du véhicule.\n3. En cas de contre-visite, effectuez les réparations sous 2 mois.",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Contrôle technique",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F2214"
+        }
+      ],
+      "steps": [
+        "Prendre RDV en centre agréé",
+        "Passer le contrôle",
+        "Effectuer les réparations si contre-visite"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F2214",
+          "title": "Réintégration dans la nationalité française par décret | Service Public",
+          "meta_description": "La réintégration dans la nationalité française des personnes qui établissent avoir déjà été françaises résulte d'un décret.",
+          "content_hash": "9834d44aa07d5c74a935d97b8d0819deceb72315f0a9fe86959caaa8099c2256",
+          "fetched_at": "2026-09-24T03:48:46Z"
+        }
+      ]
+    },
+    {
+      "id": "logement_apl",
+      "title": "Faire une demande d'aide au logement (APL)",
+      "category": "Logement & CAF",
+      "conditions": {
+        "logement": "locataire"
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 40,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Demander l'aide personnalisée au logement auprès de la CAF si vous êtes locataire.",
+      "detailed_guide": "1. Simulez vos droits sur le site de la CAF.\n2. Créez votre compte allocataire sur caf.fr.\n3. Remplissez la demande d'APL avec les informations sur le logement et les ressources.\n4. Fournissez l'attestation de loyer signée par le propriétaire.\n5. Suivez le versement mensuel une fois le dossier validé.",
+      "official_urls": [
+        {
+          "label": "CAF - Simulateur d'aides",
+          "url": "https://www.caf.fr/allocataires/aides-et-demarches/droits-et-prestations/logement-et-cadre-de-vie/estimer-mes-droits-aux-aides-au-logement"
+        },
+        {
+          "label": "Service-public.fr - APL",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F12006"
+        }
+      ],
+      "steps": [
+        "Simuler ses droits",
+        "Créer un compte CAF",
+        "Déposer la demande",
+        "Fournir l'attestation de loyer"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.caf.fr/allocataires/aides-et-demarches/droits-et-prestations/logement-et-cadre-de-vie/estimer-mes-droits-aux-aides-au-logement",
+          "title": "Radware Bot Manager Block",
+          "meta_description": null,
+          "content_hash": "9aef2145ab0474283a732f96a604d479aa48ed6b4a3a2e0e80cc6afdba2b7aec",
+          "fetched_at": "2026-09-24T03:48:49Z"
+        },
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F12006",
+          "title": "Aide personnalisée au logement (APL) | Service Public",
+          "meta_description": "L'APL peut être versée, sous certaines conditions, à toute personne qui loue un logement ou réside en établissement (par exemple, en résidence autonomie).",
+          "content_hash": "a4e8999e05ce4158a9c0917e62171ada7712e9d1f37f04ba10e03d5180e9e388",
+          "fetched_at": "2026-09-24T03:48:52Z"
+        }
+      ]
+    },
+    {
+      "id": "logement_changement_adresse",
+      "title": "Signaler un changement d'adresse",
+      "category": "Logement & CAF",
+      "conditions": {
+        "always": true
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 20,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Mettre à jour son adresse auprès des organismes (impôts, CAF, employeur, assurance, etc.) après un déménagement.",
+      "detailed_guide": "1. Utilisez le service en ligne 'Changement d'adresse en ligne' sur service-public.fr pour prévenir plusieurs organismes en une fois.\n2. Mettez à jour votre adresse sur impots.gouv.fr et caf.fr.\n3. Informez votre employeur, votre banque et vos assurances.",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Changement d'adresse en ligne",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/R11417"
+        }
+      ],
+      "steps": [
+        "Utiliser le service en ligne dédié",
+        "Mettre à jour impôts et CAF",
+        "Prévenir employeur, banque, assurances"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/R11417",
+          "error": "404 Client Error: Not Found for url: https://www.service-public.gouv.fr/particuliers/vosdroits/R11417",
+          "fetched_at": "2026-09-24T03:48:54Z"
+        }
+      ]
+    },
+    {
+      "id": "famille_allocations",
+      "title": "Déclarer une naissance / demander les allocations familiales",
+      "category": "Famille & CAF",
+      "conditions": {
+        "has_children": true
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 40,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Déclarer la naissance d'un enfant et faire valoir ses droits aux prestations familiales.",
+      "detailed_guide": "1. Déclarez la naissance à la mairie dans les 5 jours (souvent fait par la maternité).\n2. Mettez à jour votre dossier CAF pour les allocations familiales et la PAJE.\n3. Ajoutez l'enfant sur votre carte Vitale et votre mutuelle.",
+      "official_urls": [
+        {
+          "label": "CAF - Allocations familiales",
+          "url": "https://www.caf.fr/allocataires/caf/prestations-et-aides/enfant-jeune-adulte"
+        },
+        {
+          "label": "Service-public.fr - Naissance",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N359"
+        }
+      ],
+      "steps": [
+        "Déclarer la naissance en mairie",
+        "Mettre à jour le dossier CAF",
+        "Ajouter l'enfant à la sécu et la mutuelle"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.caf.fr/allocataires/caf/prestations-et-aides/enfant-jeune-adulte",
+          "title": "Radware Bot Manager Block",
+          "meta_description": null,
+          "content_hash": "b47f80ea10a6453678f82bc8e3c0bc5fbdbeb1d091f21d304f03c848fb651597",
+          "fetched_at": "2026-09-24T03:48:56Z"
+        },
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/N359",
+          "title": "Actes d'état civil | Service Public",
+          "meta_description": "Certaines démarches nécessitent la production d'actes d'état civil (acte de naissance, de mariage, de décès). Les fiches d'état civil n'existent plus.",
+          "content_hash": "5a7b7647dbd444ac82f06229a13b7f8a584c4f2f1ca3ecffe145b1c77155bc0e",
+          "fetched_at": "2026-09-24T03:48:58Z"
+        }
+      ]
+    },
+    {
+      "id": "scolarite_inscription",
+      "title": "Inscription scolaire (rentrée)",
+      "category": "Scolarité",
+      "conditions": {
+        "has_children": true
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 30,
+      "deadline_rule": {
+        "type": "yearly",
+        "month": 6,
+        "day": 30
+      },
+      "description": "Inscrire ou réinscrire un enfant à l'école, au collège ou au lycée pour la rentrée.",
+      "detailed_guide": "1. Contactez la mairie (école) ou l'établissement (collège/lycée) pour connaître la procédure.\n2. Fournissez livret de famille, justificatif de domicile et carnet de santé.\n3. Confirmez l'inscription avant la date limite fixée par l'académie.",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Inscription scolaire",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F19206"
+        }
+      ],
+      "steps": [
+        "Contacter mairie ou établissement",
+        "Réunir les documents",
+        "Confirmer l'inscription"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F19206",
+          "title": "Chèque énergie | Service Public",
+          "meta_description": "Le chèque énergie est une aide financière qui permet de payer ses dépenses d'énergie (factures d’énergie, achat de combustibles) ou charges d’énergie.",
+          "content_hash": "c4a125dba79a1d689aed5ecc2b625e7a1e7adae7c5d3a70665b1be5febba8dc6",
+          "fetched_at": "2026-09-24T03:49:01Z"
+        }
+      ]
+    },
+    {
+      "id": "scolarite_parcoursup",
+      "title": "Faire ses vœux Parcoursup",
+      "category": "Scolarité",
+      "conditions": {
+        "profession": "etudiant",
+        "max_age": 20
+      },
+      "difficulty": "difficile",
+      "estimated_minutes": 300,
+      "deadline_rule": {
+        "type": "yearly",
+        "month": 3,
+        "day": 15
+      },
+      "description": "Formuler ses vœux d'orientation post-bac sur la plateforme Parcoursup.",
+      "detailed_guide": "1. Créez votre dossier sur parcoursup.fr.\n2. Formulez jusqu'à 10 vœux de formation avant la date limite de mars.\n3. Complétez chaque dossier (lettre de motivation, CV) avant la date limite d'avril.\n4. Répondez aux propositions d'admission dès leur réception en phase principale.",
+      "official_urls": [
+        {
+          "label": "Parcoursup",
+          "url": "https://www.parcoursup.fr/"
+        }
+      ],
+      "steps": [
+        "Créer le dossier",
+        "Formuler les vœux",
+        "Compléter les dossiers",
+        "Répondre aux propositions"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.parcoursup.fr/",
+          "title": null,
+          "meta_description": null,
+          "content_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "fetched_at": "2026-09-24T03:49:03Z"
+        }
+      ]
+    },
+    {
+      "id": "scolarite_bourse_crous",
+      "title": "Demander une bourse étudiante (DSE - CROUS)",
+      "category": "Scolarité",
+      "conditions": {
+        "profession": "etudiant"
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 45,
+      "deadline_rule": {
+        "type": "yearly",
+        "month": 5,
+        "day": 15
+      },
+      "description": "Faire une demande de bourse sur critères sociaux et de logement CROUS via le Dossier Social Étudiant.",
+      "detailed_guide": "1. Créez votre Dossier Social Étudiant (DSE) sur messervices.etudiant.gouv.fr.\n2. Fournissez les informations sur les revenus du foyer fiscal.\n3. Validez avant la date limite (généralement mi-mai).\n4. Suivez la notification de bourse durant l'été.",
+      "official_urls": [
+        {
+          "label": "CROUS - Dossier Social Étudiant",
+          "url": "https://www.messervices.etudiant.gouv.fr/envole/"
+        }
+      ],
+      "steps": [
+        "Créer le DSE",
+        "Renseigner les ressources du foyer",
+        "Valider le dossier",
+        "Suivre la notification"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.messervices.etudiant.gouv.fr/envole/",
+          "title": "Accueil        —\n    MesServices.etudiant.gouv.fr",
+          "meta_description": null,
+          "content_hash": "3a50c75532d57c24cda217b6623fe182165869dec7bb0e222884a13d0e9417ac",
+          "fetched_at": "2026-09-24T03:49:07Z"
+        }
+      ]
+    },
+    {
+      "id": "sante_carte_vitale",
+      "title": "Créer ou mettre à jour sa carte Vitale",
+      "category": "Santé",
+      "conditions": {
+        "always": true
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 30,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Demander sa carte Vitale ou mettre à jour ses informations auprès de l'Assurance Maladie.",
+      "detailed_guide": "1. Créez votre compte sur ameli.fr.\n2. Faites la demande de carte Vitale si vous n'en avez pas.\n3. Mettez à jour votre photo ou situation si besoin.",
+      "official_urls": [
+        {
+          "label": "Ameli.fr - Carte Vitale",
+          "url": "https://www.ameli.fr/assure/droits-demarches/principes/carte-vitale"
+        }
+      ],
+      "steps": [
+        "Créer le compte Ameli",
+        "Faire la demande de carte Vitale",
+        "Mettre à jour les informations"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.ameli.fr/assure/droits-demarches/principes/carte-vitale",
+          "error": "403 Client Error: Forbidden for url: https://www.ameli.fr/assure/droits-demarches/principes/carte-vitale",
+          "fetched_at": "2026-09-24T03:49:09Z"
+        }
+      ]
+    },
+    {
+      "id": "emploi_inscription_francetravail",
+      "title": "S'inscrire à France Travail (ex Pôle emploi)",
+      "category": "Emploi",
+      "conditions": {
+        "profession": "sans_emploi"
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 40,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "S'inscrire comme demandeur d'emploi pour bénéficier d'un accompagnement et des allocations chômage.",
+      "detailed_guide": "1. Inscrivez-vous en ligne sur francetravail.fr.\n2. Complétez votre profil et déposez votre CV.\n3. Fournissez les justificatifs demandés (attestation employeur, RIB).\n4. Assistez au premier entretien de suivi.",
+      "official_urls": [
+        {
+          "label": "France Travail - Inscription",
+          "url": "https://www.francetravail.fr/accueil/"
+        }
+      ],
+      "steps": [
+        "S'inscrire en ligne",
+        "Compléter le profil",
+        "Fournir les justificatifs",
+        "Assister à l'entretien de suivi"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.francetravail.fr/accueil/",
+          "title": "Accueil | France Travail",
+          "meta_description": "Accueil | France Travail",
+          "content_hash": "4de9b0ef8a784c45cc48147c141ba8b917a4b06414de0abb0779b66cbeccf7a7",
+          "fetched_at": "2026-09-24T03:49:11Z"
+        }
+      ]
+    },
+    {
+      "id": "emploi_urssaf_independant",
+      "title": "Déclarer son activité indépendante (URSSAF)",
+      "category": "Emploi",
+      "conditions": {
+        "profession": "independant"
+      },
+      "difficulty": "moyen",
+      "estimated_minutes": 60,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Déclarer son chiffre d'affaires et cotiser en tant que travailleur indépendant / auto-entrepreneur.",
+      "detailed_guide": "1. Créez votre compte sur autoentrepreneur.urssaf.fr.\n2. Déclarez votre chiffre d'affaires selon la périodicité choisie (mensuelle/trimestrielle).\n3. Payez les cotisations sociales dues.",
+      "official_urls": [
+        {
+          "label": "URSSAF - Auto-entrepreneur",
+          "url": "https://www.autoentrepreneur.urssaf.fr/"
+        }
+      ],
+      "steps": [
+        "Créer le compte URSSAF",
+        "Déclarer le chiffre d'affaires",
+        "Payer les cotisations"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.autoentrepreneur.urssaf.fr/",
+          "error": "('Connection aborted.', RemoteDisconnected('Remote end closed connection without response'))",
+          "fetched_at": "2026-09-24T03:49:13Z"
+        }
+      ]
+    },
+    {
+      "id": "etranger_titre_sejour",
+      "title": "Renouveler son titre de séjour",
+      "category": "Étranger & Nationalité",
+      "conditions": {
+        "nationalite_etrangere": true
+      },
+      "difficulty": "difficile",
+      "estimated_minutes": 120,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Anticiper le renouvellement du titre de séjour avant son expiration (démarche à commencer 4 mois avant).",
+      "detailed_guide": "1. Faites la demande en ligne sur le site de l'Administration Numérique des Étrangers en France (ANEF).\n2. Réunissez les justificatifs (domicile, ressources, situation).\n3. Suivez l'instruction du dossier et rendez-vous en préfecture si convoqué.",
+      "official_urls": [
+        {
+          "label": "ANEF - Étrangers en France",
+          "url": "https://administration-etrangers-en-france.interieur.gouv.fr/"
+        }
+      ],
+      "steps": [
+        "Faire la demande en ligne sur l'ANEF",
+        "Réunir les justificatifs",
+        "Suivre l'instruction du dossier"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://administration-etrangers-en-france.interieur.gouv.fr/",
+          "title": "Administration numÃ©rique pour les Ã©trangers en France",
+          "meta_description": null,
+          "content_hash": "e95c6b2183268f38d045b05730b9113cc084a3dc96f5966c2004ddcaab289df6",
+          "fetched_at": "2026-09-24T03:49:15Z"
+        }
+      ]
+    },
+    {
+      "id": "retraite_releve_carriere",
+      "title": "Vérifier son relevé de carrière retraite",
+      "category": "Retraite",
+      "conditions": {
+        "min_age": 45
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 30,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "Vérifier régulièrement son relevé de carrière pour anticiper sa future retraite.",
+      "detailed_guide": "1. Connectez-vous sur info-retraite.fr.\n2. Consultez votre relevé de carrière tous régimes.\n3. Signalez toute anomalie ou période manquante.",
+      "official_urls": [
+        {
+          "label": "Info Retraite",
+          "url": "https://www.info-retraite.fr/"
+        }
+      ],
+      "steps": [
+        "Se connecter sur info-retraite.fr",
+        "Vérifier le relevé de carrière",
+        "Signaler les anomalies"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.info-retraite.fr/",
+          "title": "Info Retraite - Accueil",
+          "meta_description": "Salarié, fonctionnaire, indépendant, chômeur, retraité : quels que soient votre parcours et votre situation, retrouvez tous vos droits avec Info Retraite.",
+          "content_hash": "0a279502cbb250b6d33003d8d57f8514a0ea7849424f6165c9d56223796f4177",
+          "fetched_at": "2026-09-24T03:49:18Z"
+        }
+      ]
+    },
+    {
+      "id": "citoyennete_listes_electorales",
+      "title": "S'inscrire sur les listes électorales",
+      "category": "Citoyenneté",
+      "conditions": {
+        "min_age": 18,
+        "nationalite_etrangere": false
+      },
+      "difficulty": "facile",
+      "estimated_minutes": 15,
+      "deadline_rule": {
+        "type": "none"
+      },
+      "description": "S'inscrire sur les listes électorales de sa commune pour pouvoir voter.",
+      "detailed_guide": "1. Vérifiez votre inscription sur service-public.fr.\n2. Si besoin, inscrivez-vous en ligne ou en mairie avec un justificatif de domicile et une pièce d'identité.",
+      "official_urls": [
+        {
+          "label": "Service-public.fr - Listes électorales",
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F1965"
+        }
+      ],
+      "steps": [
+        "Vérifier son inscription",
+        "S'inscrire en ligne ou en mairie si besoin"
+      ],
+      "scraped_info": [
+        {
+          "url": "https://www.service-public.fr/particuliers/vosdroits/F1965",
+          "title": "S'inscrire sur la liste électorale en mairie : quel justificatif de domicile ? | Service Public",
+          "meta_description": "Pour être inscrit sur la liste électorale d’une commune, il faut soit y habiter ou y résider, soit être un de ses contribuables, soit être chef d'entreprise.",
+          "content_hash": "4aff2f98d21147b2426b83e4bf96ebf126815714f9d9217675923580aebde83e",
+          "fetched_at": "2026-09-24T03:49:20Z"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,201 @@
+{% extends "base.html" %}
+{% block title %}{{ demarche.title }}{% endblock %}
+{% block content %}
+
+{% set request_qs = request.query_params %}
+{% if request_qs.get('awarded') %}
+<div class="mb-4 bg-primary/10 text-primary rounded-xl px-4 py-3 flex items-center gap-2">
+    <i data-lucide="party-popper" class="w-5 h-5 shrink-0"></i>
+    <div>
+        <p class="font-medium">Bravo, démarche terminée ! +{{ request_qs.get('awarded') }} points</p>
+        {% if request_qs.get('badges') %}
+        <p class="text-sm">Nouveau(x) badge(s) débloqué(s) : {{ request_qs.get('badges') }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
+<a href="/" class="flex items-center gap-1 text-sm text-slate-500 hover:text-primary w-fit">
+    <i data-lucide="arrow-left" class="w-4 h-4"></i> Retour aux démarches
+</a>
+
+<div class="mt-3 grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 space-y-5">
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <div class="flex items-start justify-between gap-3">
+                <div>
+                    <h1 class="text-xl font-title text-slate-800">{{ demarche.title }}</h1>
+                    <p class="flex items-center gap-2 text-sm text-slate-400 mt-1">
+                        {% if demarche.category %}
+                        <span class="flex items-center gap-1">
+                            <i data-lucide="{{ demarche.category.icon }}" class="w-3.5 h-3.5"></i> {{ demarche.category.name }}
+                        </span>
+                        {% endif %}
+                        {% if demarche.person %}
+                        <span class="flex items-center gap-1">
+                            <i data-lucide="user" class="w-3.5 h-3.5"></i> {{ demarche.person.name }}
+                        </span>
+                        {% endif %}
+                    </p>
+                </div>
+                <form method="post" action="/demarches/{{ demarche.id }}/delete"
+                      onsubmit="return confirm('Supprimer cette démarche ?');">
+                    <button class="flex items-center gap-1 text-xs text-slate-400 hover:text-red-500">
+                        <i data-lucide="trash" class="w-3.5 h-3.5"></i> Supprimer
+                    </button>
+                </form>
+            </div>
+
+            {% if demarche.description %}
+            <p class="mt-4 text-slate-600">{{ demarche.description }}</p>
+            {% endif %}
+
+            <div class="mt-4 flex flex-wrap gap-2">
+                <form method="post" action="/demarches/{{ demarche.id }}/status">
+                    <input type="hidden" name="status" value="a_faire">
+                    <button class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full {{ 'bg-slate-700 text-white' if demarche.status == 'a_faire' else 'bg-slate-100 text-slate-600' }}">
+                        <i data-lucide="circle" class="w-3.5 h-3.5"></i> À faire
+                    </button>
+                </form>
+                <form method="post" action="/demarches/{{ demarche.id }}/status">
+                    <input type="hidden" name="status" value="en_cours">
+                    <button class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full {{ 'bg-sunset text-white' if demarche.status == 'en_cours' else 'bg-amber/15 text-sunset' }}">
+                        <i data-lucide="loader-circle" class="w-3.5 h-3.5"></i> En cours
+                    </button>
+                </form>
+                <form method="post" action="/demarches/{{ demarche.id }}/status">
+                    <input type="hidden" name="status" value="terminee">
+                    <button class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full {{ 'bg-primary text-white' if demarche.status == 'terminee' else 'bg-primary/10 text-primary' }}">
+                        <i data-lucide="circle-check-big" class="w-3.5 h-3.5"></i> Terminée
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <h2 class="font-title text-primary mb-3 flex items-center gap-2">
+                <i data-lucide="book-open" class="w-5 h-5"></i> Guide détaillé
+            </h2>
+            {% if demarche.detailed_guide %}
+            <p class="text-sm text-slate-600 whitespace-pre-line">{{ demarche.detailed_guide }}</p>
+            {% else %}
+            <p class="text-sm text-slate-400">Pas encore de guide détaillé pour cette démarche.</p>
+            {% endif %}
+
+            {% if demarche.official_urls %}
+            <div class="mt-4">
+                <h3 class="text-sm font-medium text-slate-500 mb-1">Liens officiels</h3>
+                <ul class="space-y-1">
+                    {% for link in demarche.official_urls %}
+                    <li>
+                        <a href="{{ link.url }}" target="_blank" rel="noopener noreferrer"
+                           class="flex items-center gap-1.5 text-sm text-secondary hover:underline w-fit">
+                            <i data-lucide="link" class="w-3.5 h-3.5"></i> {{ link.label }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+        {% if demarche.steps %}
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <h2 class="font-title text-primary mb-3 flex items-center gap-2">
+                <i data-lucide="list-checks" class="w-5 h-5"></i> Étapes
+            </h2>
+            <ul class="space-y-2" id="steps-list" data-demarche-id="{{ demarche.id }}">
+                {% for step in demarche.steps %}
+                <li class="flex items-center gap-2">
+                    <input type="checkbox" data-index="{{ loop.index0 }}" {{ 'checked' if step.done }}
+                           class="step-checkbox h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary/40">
+                    <span class="{{ 'line-through text-slate-400' if step.done }}">{{ step.label }}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        <details class="bg-white rounded-2xl border border-slate-200 p-6">
+            <summary class="font-title text-primary cursor-pointer flex items-center gap-2">
+                <i data-lucide="square-pen" class="w-5 h-5"></i> Modifier / notes
+            </summary>
+            <form method="post" action="/demarches/{{ demarche.id }}/edit" class="mt-4 space-y-4">
+                <div>
+                    <label class="block text-sm font-medium mb-1">Titre</label>
+                    <input type="text" name="title" value="{{ demarche.title }}" required
+                           class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Description</label>
+                    <textarea name="description" rows="2" class="w-full border border-slate-300 rounded-lg px-3 py-2">{{ demarche.description }}</textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Catégorie</label>
+                        <select name="category_id" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                            {% for c in categories %}
+                            <option value="{{ c.id }}" {{ 'selected' if demarche.category_id == c.id }}>{{ c.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Personne</label>
+                        <select name="person_id" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                            {% for p in people %}
+                            <option value="{{ p.id }}" {{ 'selected' if demarche.person_id == p.id }}>{{ p.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Difficulté</label>
+                        <select name="difficulty" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                            <option value="facile" {{ 'selected' if demarche.difficulty == 'facile' }}>Facile</option>
+                            <option value="moyen" {{ 'selected' if demarche.difficulty == 'moyen' }}>Moyen</option>
+                            <option value="difficile" {{ 'selected' if demarche.difficulty == 'difficile' }}>Difficile</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Temps estimé (min)</label>
+                        <input type="number" name="estimated_minutes" value="{{ demarche.estimated_minutes }}"
+                               class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium mb-1">Deadline</label>
+                        <input type="date" name="deadline"
+                               value="{{ demarche.deadline.strftime('%Y-%m-%d') if demarche.deadline else '' }}"
+                               class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium mb-1">Notes personnelles</label>
+                    <textarea name="notes" rows="2" class="w-full border border-slate-300 rounded-lg px-3 py-2">{{ demarche.notes }}</textarea>
+                </div>
+                <button type="submit" class="flex items-center gap-2 bg-primary text-white rounded-lg px-4 py-2 text-sm font-medium hover:bg-primary-600">
+                    <i data-lucide="check" class="w-4 h-4"></i> Enregistrer
+                </button>
+            </form>
+        </details>
+    </div>
+
+    <div class="space-y-5">
+        <div class="bg-white rounded-2xl border border-slate-200 p-5 text-sm space-y-3">
+            <p class="flex items-center justify-between"><span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="activity" class="w-4 h-4"></i> Statut</span> <strong>{{ demarche.status.replace('_', ' ') }}</strong></p>
+            <p class="flex items-center justify-between"><span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="gauge" class="w-4 h-4"></i> Difficulté</span> <strong>{{ demarche.difficulty }}</strong></p>
+            <p class="flex items-center justify-between"><span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="timer" class="w-4 h-4"></i> Temps estimé</span> <strong>~{{ demarche.estimated_minutes }} min</strong></p>
+            <p class="flex items-center justify-between"><span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="calendar" class="w-4 h-4"></i> Deadline</span> <strong class="{{ 'text-red-600' if demarche.is_overdue }}">{{ demarche.deadline | fr_date }}</strong></p>
+            <p class="flex items-center justify-between"><span class="text-slate-400 flex items-center gap-1.5"><i data-lucide="gift" class="w-4 h-4"></i> Récompense</span> <strong>{{ demarche.points_reward }} pts</strong></p>
+            {% if demarche.started_at %}
+            <p class="flex items-center justify-between"><span class="text-slate-400">Démarrée le</span> {{ demarche.started_at | fr_date }}</p>
+            {% endif %}
+            {% if demarche.completed_at %}
+            <p class="flex items-center justify-between"><span class="text-slate-400">Terminée le</span> {{ demarche.completed_at | fr_date }}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/app.js"></script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Récompenses{% endblock %}
+{% block content %}
+<h1 class="text-xl font-title text-primary mb-4 flex items-center gap-2">
+    <i data-lucide="trophy" class="w-5 h-5"></i> Récompenses
+</h1>
+
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 text-center">
+        <i data-lucide="star" class="w-6 h-6 mx-auto mb-1 text-amber"></i>
+        <p class="text-3xl font-title text-primary">{{ user.points_total }}</p>
+        <p class="text-sm text-slate-400">points cumulés</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 text-center">
+        <i data-lucide="rocket" class="w-6 h-6 mx-auto mb-1 text-secondary"></i>
+        <p class="text-3xl font-title text-primary">Niveau {{ user.level }}</p>
+        <p class="text-sm text-slate-400">encore {{ points_to_next_level }} pts avant le niveau {{ user.level + 1 }}</p>
+    </div>
+    <div class="bg-white rounded-2xl border border-slate-200 p-5 text-center">
+        <i data-lucide="circle-check-big" class="w-6 h-6 mx-auto mb-1 text-sunset"></i>
+        <p class="text-3xl font-title text-primary">{{ completed_count }}</p>
+        <p class="text-sm text-slate-400">démarches terminées</p>
+    </div>
+</div>
+
+<h2 class="font-title text-primary mb-3">Badges obtenus</h2>
+{% if not badges %}
+<p class="text-sm text-slate-400">Aucun badge pour l'instant — terminez votre première démarche pour en débloquer un !</p>
+{% else %}
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+    {% for b in badges %}
+    <div class="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+        <span class="flex items-center justify-center w-12 h-12 mx-auto rounded-full bg-primary/10 text-primary mb-2">
+            <i data-lucide="{{ b.icon }}" class="w-5 h-5"></i>
+        </span>
+        <p class="font-medium text-sm">{{ b.label }}</p>
+        <p class="text-xs text-slate-400">{{ b.awarded_at | fr_date }}</p>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<h2 class="font-title text-primary mt-8 mb-3">Comment gagner des points ?</h2>
+<ul class="text-sm text-slate-600 space-y-2">
+    <li class="flex items-start gap-2"><i data-lucide="banknote" class="w-4 h-4 mt-0.5 text-primary shrink-0"></i> Terminer une démarche rapporte des points selon sa difficulté (facile 30, moyen 50, difficile 80).</li>
+    <li class="flex items-start gap-2"><i data-lucide="timer" class="w-4 h-4 mt-0.5 text-primary shrink-0"></i> La terminer avant sa deadline ajoute un bonus (jusqu'à +40 points).</li>
+    <li class="flex items-start gap-2"><i data-lucide="medal" class="w-4 h-4 mt-0.5 text-primary shrink-0"></i> Des badges se débloquent automatiquement : première démarche, 10 démarches, zéro retard, rapidité...</li>
+</ul>
+{% endblock %}

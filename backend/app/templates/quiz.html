@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+{% block title %}Quizz de bienvenue{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white shadow-lg rounded-2xl p-8">
+    <h1 class="text-2xl font-title text-primary mb-1 flex items-center gap-2">
+        <i data-lucide="sparkles" class="w-6 h-6"></i> Bienvenue {{ user.username }}
+    </h1>
+    <p class="text-slate-500 text-sm mb-6">
+        Répondez à ces quelques questions pour que l'on puisse identifier automatiquement les démarches
+        administratives qui vous concernent (impôts, permis, CAF, scolarité...).
+    </p>
+
+    <form method="post" action="/quiz" class="space-y-5">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Âge</label>
+                <input type="number" name="age" min="0" max="120" required
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Sexe</label>
+                <select name="sexe" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    <option value="femme">Femme</option>
+                    <option value="homme">Homme</option>
+                    <option value="autre">Autre / ne se prononce pas</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Pays de résidence</label>
+                <input type="text" name="pays_residence" value="France"
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Nationalité étrangère (hors France) ?</label>
+                <select name="nationalite_etrangere" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    <option value="non">Non</option>
+                    <option value="oui">Oui</option>
+                </select>
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Situation familiale</label>
+            <select name="situation_familiale" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                <option value="celibataire">Célibataire</option>
+                <option value="couple">En couple</option>
+                <option value="marie">Marié(e) / pacsé(e)</option>
+            </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 items-end">
+            <div>
+                <label class="block text-sm font-medium mb-1">Avez-vous des enfants ?</label>
+                <select name="has_children" id="has_children" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    <option value="non">Non</option>
+                    <option value="oui">Oui</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Combien d'enfants ?</label>
+                <input type="number" name="nb_enfants" min="0" value="0"
+                       class="w-full border border-slate-300 rounded-lg px-3 py-2">
+            </div>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Profession / statut</label>
+            <select name="profession" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                <option value="salarie">Salarié(e)</option>
+                <option value="etudiant">Étudiant(e)</option>
+                <option value="independant">Indépendant(e) / auto-entrepreneur</option>
+                <option value="sans_emploi">Sans emploi</option>
+                <option value="retraite">Retraité(e)</option>
+                <option value="autre">Autre</option>
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Logement</label>
+            <select name="logement" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                <option value="locataire">Locataire</option>
+                <option value="proprietaire">Propriétaire</option>
+                <option value="heberge">Hébergé(e)</option>
+            </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-medium mb-1">Avez-vous le permis de conduire ?</label>
+                <select name="has_permis" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    <option value="non">Non</option>
+                    <option value="oui">Oui</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Avez-vous un véhicule ?</label>
+                <select name="has_vehicle" class="w-full border border-slate-300 rounded-lg px-3 py-2">
+                    <option value="non">Non</option>
+                    <option value="oui">Oui</option>
+                </select>
+            </div>
+        </div>
+
+        <button type="submit" class="w-full flex items-center justify-center gap-2 bg-primary text-white rounded-lg py-2.5 font-medium hover:bg-primary-600">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Générer mes démarches
+        </button>
+    </form>
+</div>
+{% endblock %}
