@@ -1,23 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const toggle = document.getElementById("chatbot-toggle");
+    const openTriggers = document.querySelectorAll(".js-open-chatbot");
     const closeBtn = document.getElementById("chatbot-close");
     const panel = document.getElementById("chatbot-panel");
     const form = document.getElementById("chatbot-form");
     const input = document.getElementById("chatbot-input");
     const messages = document.getElementById("chatbot-messages");
 
-    if (!toggle || !panel || !form) return;
+    if (!panel || !form) return;
 
     function openPanel() {
         panel.classList.remove("translate-x-full");
-        toggle.classList.remove("chatbot-pulse");
         input.focus();
     }
     function closePanel() {
         panel.classList.add("translate-x-full");
     }
 
-    toggle.addEventListener("click", openPanel);
+    openTriggers.forEach((btn) => btn.addEventListener("click", openPanel));
     closeBtn.addEventListener("click", closePanel);
 
     function addBubble(text, who) {

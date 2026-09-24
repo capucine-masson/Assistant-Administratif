@@ -22,9 +22,9 @@
         </span>
         {% endif %}
     </div>
-    <a href="/demarches/new" class="flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-600">
+    <button type="button" class="js-open-chatbot flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-600">
         <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle démarche
-    </a>
+    </button>
 </div>
 
 {% include "_filters_bar.html" %}
@@ -33,7 +33,7 @@
 <div class="text-center py-16 text-slate-400">
     <i data-lucide="sparkles" class="w-8 h-8 mx-auto mb-2 text-secondary"></i>
     <p class="text-lg">Aucune démarche pour l'instant</p>
-    <a href="/demarches/new" class="text-primary hover:underline">Ajouter une démarche</a>
+    <button type="button" class="js-open-chatbot text-primary hover:underline">Ajouter une démarche</button>
 </div>
 {% endif %}
 

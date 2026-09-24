@@ -13,9 +13,9 @@
         </span>
         {% endif %}
     </div>
-    <a href="/demarches/new" class="flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-600">
+    <button type="button" class="js-open-chatbot flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-primary-600">
         <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle démarche
-    </a>
+    </button>
 </div>
 
 {% include "_filters_bar.html" %}
@@ -44,5 +44,5 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
-<script src="/static/js/calendar.js"></script>
+<script src="/static/js/calendar.js?v={{ asset_version }}"></script>
 {% endblock %}
