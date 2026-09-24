@@ -15,7 +15,7 @@
             </span>
             {% endif %}
             <div>
-                <h3 class="font-semibold text-slate-800">{{ demarche.title }}</h3>
+                <h3 class="font-semibold {{ 'text-slate-400 line-through' if demarche.status == 'terminee' else 'text-slate-800' }}">{{ demarche.title }}</h3>
                 <p class="text-xs text-slate-400">
                     {% if demarche.category %}{{ demarche.category.name }}{% endif %}
                     {% if demarche.person %} · {{ demarche.person.name }}{% endif %}

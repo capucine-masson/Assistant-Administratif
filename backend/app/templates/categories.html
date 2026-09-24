@@ -8,23 +8,27 @@
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
     {% for c in categories %}
     <div class="bg-white rounded-2xl border border-slate-200 p-4">
-        <form method="post" action="/categories/{{ c.id }}/edit" class="flex items-center gap-2">
-            <span class="icon-preview flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
-                  style="background-color: {{ c.color }}1a; color: {{ c.color }};">
-                <i data-lucide="{{ c.icon }}" class="w-4 h-4"></i>
-            </span>
-            <select name="icon" onchange="updateIconPreview(this)"
-                    class="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
-                {% for key, label in icon_choices.items() %}
-                <option value="{{ key }}" {{ 'selected' if c.icon == key }}>{{ label }}</option>
-                {% endfor %}
-            </select>
-            <input type="text" name="name" value="{{ c.name }}"
-                   class="flex-1 border border-slate-300 rounded-lg px-2 py-1.5">
-            <input type="color" name="color" value="{{ c.color }}"
-                   onchange="updateColorPreview(this)"
-                   class="h-9 w-10 rounded border border-slate-300">
-            <button class="text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">OK</button>
+        <form method="post" action="/categories/{{ c.id }}/edit" class="space-y-2">
+            <div class="flex items-center gap-2">
+                <span class="icon-preview flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
+                      style="background-color: {{ c.color }}1a; color: {{ c.color }};">
+                    <i data-lucide="{{ c.icon }}" class="w-4 h-4"></i>
+                </span>
+                <input type="text" name="name" value="{{ c.name }}"
+                       class="flex-1 min-w-0 border border-slate-300 rounded-lg px-2 py-1.5">
+            </div>
+            <div class="flex items-center gap-2">
+                <select name="icon" onchange="updateIconPreview(this)"
+                        class="flex-1 min-w-0 border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+                    {% for key, label in icon_choices.items() %}
+                    <option value="{{ key }}" {{ 'selected' if c.icon == key }}>{{ label }}</option>
+                    {% endfor %}
+                </select>
+                <input type="color" name="color" value="{{ c.color }}"
+                       onchange="updateColorPreview(this)"
+                       class="h-9 w-10 shrink-0 rounded border border-slate-300">
+                <button class="shrink-0 text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">OK</button>
+            </div>
         </form>
         {% if not c.demarches %}
         <form method="post" action="/categories/{{ c.id }}/delete" class="mt-2"
@@ -44,19 +48,23 @@
     <h2 class="font-title text-primary mb-3 flex items-center gap-2">
         <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle catégorie
     </h2>
-    <form method="post" action="/categories/new" class="flex items-center gap-2">
-        <span id="new-icon-preview" class="icon-preview flex items-center justify-center w-9 h-9 rounded-xl shrink-0 bg-primary/10 text-primary">
-            <i data-lucide="folder" class="w-4 h-4"></i>
-        </span>
-        <select name="icon" onchange="updateIconPreview(this)" class="border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
-            {% for key, label in icon_choices.items() %}
-            <option value="{{ key }}">{{ label }}</option>
-            {% endfor %}
-        </select>
-        <input type="text" name="name" required placeholder="Nom de la catégorie"
-               class="flex-1 border border-slate-300 rounded-lg px-2 py-1.5">
-        <input type="color" name="color" value="#3D348B" class="h-9 w-10 rounded border border-slate-300">
-        <button class="text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">Ajouter</button>
+    <form method="post" action="/categories/new" class="space-y-2">
+        <div class="flex items-center gap-2">
+            <span id="new-icon-preview" class="icon-preview flex items-center justify-center w-9 h-9 rounded-xl shrink-0 bg-primary/10 text-primary">
+                <i data-lucide="folder" class="w-4 h-4"></i>
+            </span>
+            <input type="text" name="name" required placeholder="Nom de la catégorie"
+                   class="flex-1 min-w-0 border border-slate-300 rounded-lg px-2 py-1.5">
+        </div>
+        <div class="flex items-center gap-2">
+            <select name="icon" onchange="updateIconPreview(this)" class="flex-1 min-w-0 border border-slate-300 rounded-lg px-2 py-1.5 text-sm">
+                {% for key, label in icon_choices.items() %}
+                <option value="{{ key }}">{{ label }}</option>
+                {% endfor %}
+            </select>
+            <input type="color" name="color" value="#3D348B" class="h-9 w-10 shrink-0 rounded border border-slate-300">
+            <button class="shrink-0 text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">Ajouter</button>
+        </div>
     </form>
 </div>
 

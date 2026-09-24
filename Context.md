@@ -24,3 +24,14 @@ Développe moi cette interface selon ces contraintes :
 - docker : je veux un conteneur pour cette webapp à lancer en local sur le port 9090
 - tu auras besoin d'une clé API d'un LLM pour pouvoir faire ce projet. Explique moi exactement comment m'en procurer une. Je veux que ce soit gratuit, ou alors cherche moi une alternative sur hugging face pour faire tourner un mini modele sur mon PC (qui fera l affaire)
 - tu vas checker des la creation de la web app toutes les demarches obligatoires et tout ce qu'il y a à savoir sur chacune d'elle mais il peut y avoir des changements donc je veux un script qui rescrappe toutes les données officielles que je peux lancer à tout moment qui permet de recup les infos mises à jour.
+
+
+
+
+Je peux supprimer les fonctions call_huggingface et call_ollama car j utilise que groq on est d accord ?
+
+je veux une petite bd dans data --> un fichier .db en sqlite a ajouter aux volumes pour ne pas tout perdre des qu on rebuild l image (Concrètement pour SQLite dans ton .env :
+DATABASE_URL=sqlite:///./data/app.db)
+Ca te semble correct et etre une bonne idée?
+
+

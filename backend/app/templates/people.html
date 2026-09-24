@@ -34,15 +34,15 @@
     <h2 class="font-title text-primary mb-3 flex items-center gap-2">
         <i data-lucide="plus" class="w-4 h-4"></i> Ajouter une personne
     </h2>
-    <form method="post" action="/people/new" class="flex items-center gap-2">
-        <input type="text" name="name" required placeholder="Prénom" class="flex-1 border border-slate-300 rounded-lg px-2 py-1.5">
-        <select name="relation" class="border border-slate-300 rounded-lg px-2 py-1.5">
+    <form method="post" action="/people/new" class="flex items-center gap-2 flex-wrap">
+        <input type="text" name="name" required placeholder="Prénom" class="flex-1 min-w-[8rem] border border-slate-300 rounded-lg px-2 py-1.5">
+        <select name="relation" class="shrink-0 border border-slate-300 rounded-lg px-2 py-1.5">
             <option value="conjoint">Conjoint(e)</option>
             <option value="enfant">Enfant</option>
             <option value="parent">Parent</option>
             <option value="autre">Autre</option>
         </select>
-        <button class="text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">Ajouter</button>
+        <button class="shrink-0 text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary-600">Ajouter</button>
     </form>
 </div>
 {% endblock %}
