@@ -40,6 +40,7 @@
                 </div>
                 <form method="post" action="/demarches/{{ demarche.id }}/delete"
                       onsubmit="return confirm('Supprimer cette démarche ?');">
+                    <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
                     <button class="flex items-center gap-1 text-xs text-slate-400 hover:text-red-500">
                         <i data-lucide="trash" class="w-3.5 h-3.5"></i> Supprimer
                     </button>
@@ -52,18 +53,21 @@
 
             <div class="mt-4 flex flex-wrap gap-2">
                 <form method="post" action="/demarches/{{ demarche.id }}/status">
+                    <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
                     <input type="hidden" name="status" value="a_faire">
                     <button class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full {{ 'bg-slate-700 text-white' if demarche.status == 'a_faire' else 'bg-slate-100 text-slate-600' }}">
                         <i data-lucide="circle" class="w-3.5 h-3.5"></i> À faire
                     </button>
                 </form>
                 <form method="post" action="/demarches/{{ demarche.id }}/status">
+                    <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
                     <input type="hidden" name="status" value="en_cours">
                     <button class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full {{ 'bg-sunset text-white' if demarche.status == 'en_cours' else 'bg-amber/15 text-sunset' }}">
                         <i data-lucide="loader-circle" class="w-3.5 h-3.5"></i> En cours
                     </button>
                 </form>
                 <form method="post" action="/demarches/{{ demarche.id }}/status">
+                    <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
                     <input type="hidden" name="status" value="terminee">
                     <button class="flex items-center gap-1.5 text-xs px-3 py-1.5 rounded-full {{ 'bg-primary text-white' if demarche.status == 'terminee' else 'bg-primary/10 text-primary' }}">
                         <i data-lucide="circle-check-big" class="w-3.5 h-3.5"></i> Terminée
@@ -121,6 +125,7 @@
                 <i data-lucide="square-pen" class="w-5 h-5"></i> Modifier / notes
             </summary>
             <form method="post" action="/demarches/{{ demarche.id }}/edit" class="mt-4 space-y-4">
+                <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
                 <div>
                     <label class="block text-sm font-medium mb-1">Titre</label>
                     <input type="text" name="title" value="{{ demarche.title }}" required

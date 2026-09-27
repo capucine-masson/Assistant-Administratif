@@ -6,6 +6,7 @@ from ..database import get_db
 from ..deps import resolve_user_or_redirect
 from ..icons import CATEGORY_ICON_LABELS
 from ..models import Category
+from ..security import verify_csrf_form
 from ..templating import templates
 
 router = APIRouter()
@@ -25,7 +26,7 @@ def categories_page(request: Request, db: Session = Depends(get_db)):
     )
 
 
-@router.post("/categories/new")
+@router.post("/categories/new", dependencies=[Depends(verify_csrf_form)])
 def create_category(
     request: Request,
     db: Session = Depends(get_db),
@@ -44,7 +45,7 @@ def create_category(
     return RedirectResponse("/categories", status_code=303)
 
 
-@router.post("/categories/{category_id}/edit")
+@router.post("/categories/{category_id}/edit", dependencies=[Depends(verify_csrf_form)])
 def edit_category(
     category_id: int,
     request: Request,
@@ -66,7 +67,7 @@ def edit_category(
     return RedirectResponse("/categories", status_code=303)
 
 
-@router.post("/categories/{category_id}/delete")
+@router.post("/categories/{category_id}/delete", dependencies=[Depends(verify_csrf_form)])
 def delete_category(category_id: int, request: Request, db: Session = Depends(get_db)):
     user, redirect = resolve_user_or_redirect(request, db)
     if redirect:

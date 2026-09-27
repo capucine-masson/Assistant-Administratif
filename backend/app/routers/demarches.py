@@ -7,8 +7,10 @@ from sqlalchemy.orm import Session
 from .. import rewards as rewards_logic
 from ..database import get_db
 from ..deps import resolve_user_or_redirect
+from ..enums import DemarcheStatus, points_for_difficulty
 from ..llm_service import estimate_and_generate_guide
 from ..models import Category, Demarche, Person
+from ..security import verify_csrf_form, verify_csrf_header
 from ..templating import templates
 
 router = APIRouter()
@@ -57,9 +59,9 @@ def dashboard(
     grouped = dict(sorted(grouped.items()))
 
     counts = {
-        "a_faire": sum(1 for d in demarches if d.status == "a_faire"),
-        "en_cours": sum(1 for d in demarches if d.status == "en_cours"),
-        "terminee": sum(1 for d in demarches if d.status == "terminee"),
+        "a_faire": sum(1 for d in demarches if d.status == DemarcheStatus.A_FAIRE.value),
+        "en_cours": sum(1 for d in demarches if d.status == DemarcheStatus.EN_COURS.value),
+        "terminee": sum(1 for d in demarches if d.status == DemarcheStatus.TERMINEE.value),
         "overdue": sum(1 for d in demarches if d.is_overdue),
     }
 
@@ -95,7 +97,7 @@ def new_demarche_page(request: Request, db: Session = Depends(get_db)):
     )
 
 
-@router.post("/demarches/new")
+@router.post("/demarches/new", dependencies=[Depends(verify_csrf_form)])
 def create_demarche(
     request: Request,
     db: Session = Depends(get_db),
@@ -118,7 +120,7 @@ def create_demarche(
         person_id=person_id,
         title=title.strip(),
         description=description.strip(),
-        status="a_faire",
+        status=DemarcheStatus.A_FAIRE.value,
     )
 
     if deadline:
@@ -136,7 +138,7 @@ def create_demarche(
         demarche.difficulty = difficulty
         demarche.estimated_minutes = estimated_minutes or 30
 
-    demarche.points_reward = {"facile": 30, "moyen": 50, "difficile": 80}.get(demarche.difficulty, 50)
+    demarche.points_reward = points_for_difficulty(demarche.difficulty)
     demarche.official_urls = []
     demarche.steps = []
 
@@ -166,7 +168,7 @@ def demarche_detail(demarche_id: int, request: Request, db: Session = Depends(ge
     )
 
 
-@router.post("/demarches/{demarche_id}/status")
+@router.post("/demarches/{demarche_id}/status", dependencies=[Depends(verify_csrf_form)])
 def update_status(demarche_id: int, request: Request, db: Session = Depends(get_db), status: str = Form(...)):
     user, redirect = resolve_user_or_redirect(request, db)
     if redirect:
@@ -176,13 +178,13 @@ def update_status(demarche_id: int, request: Request, db: Session = Depends(get_
     if demarche is None:
         return RedirectResponse("/", status_code=303)
 
-    if status == "en_cours" and demarche.started_at is None:
+    if status == DemarcheStatus.EN_COURS.value and demarche.started_at is None:
         demarche.started_at = datetime.datetime.utcnow()
-        demarche.status = "en_cours"
+        demarche.status = DemarcheStatus.EN_COURS.value
         db.commit()
         return RedirectResponse(f"/demarches/{demarche_id}", status_code=303)
 
-    if status == "terminee" and demarche.status != "terminee":
+    if status == DemarcheStatus.TERMINEE.value and demarche.status != DemarcheStatus.TERMINEE.value:
         result = rewards_logic.complete_demarche(db, demarche)
         db.commit()
         badges_str = ",".join(b.label for b in result["new_badges"])
@@ -196,7 +198,7 @@ def update_status(demarche_id: int, request: Request, db: Session = Depends(get_
     return RedirectResponse(f"/demarches/{demarche_id}", status_code=303)
 
 
-@router.post("/demarches/{demarche_id}/step")
+@router.post("/demarches/{demarche_id}/step", dependencies=[Depends(verify_csrf_header)])
 async def toggle_step(demarche_id: int, request: Request, db: Session = Depends(get_db)):
     user, redirect = resolve_user_or_redirect(request, db)
     if redirect:
@@ -217,7 +219,7 @@ async def toggle_step(demarche_id: int, request: Request, db: Session = Depends(
     return JSONResponse({"steps": demarche.steps})
 
 
-@router.post("/demarches/{demarche_id}/edit")
+@router.post("/demarches/{demarche_id}/edit", dependencies=[Depends(verify_csrf_form)])
 def edit_demarche(
     demarche_id: int,
     request: Request,
@@ -258,7 +260,7 @@ def edit_demarche(
     return RedirectResponse(f"/demarches/{demarche_id}", status_code=303)
 
 
-@router.post("/demarches/{demarche_id}/delete")
+@router.post("/demarches/{demarche_id}/delete", dependencies=[Depends(verify_csrf_form)])
 def delete_demarche(demarche_id: int, request: Request, db: Session = Depends(get_db)):
     user, redirect = resolve_user_or_redirect(request, db)
     if redirect:

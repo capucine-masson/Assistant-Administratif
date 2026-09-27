@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from ..database import get_db
 from ..deps import resolve_user_or_redirect
+from ..enums import DemarcheStatus
 from ..models import Badge
 from ..templating import templates
 
@@ -16,7 +17,7 @@ def rewards_page(request: Request, db: Session = Depends(get_db)):
         return redirect
 
     badges = db.query(Badge).filter_by(user_id=user.id).order_by(Badge.awarded_at.desc()).all()
-    completed_count = sum(1 for d in user.demarches if d.status == "terminee")
+    completed_count = sum(1 for d in user.demarches if d.status == DemarcheStatus.TERMINEE.value)
     points_to_next_level = 200 - (user.points_total % 200)
 
     return templates.TemplateResponse(

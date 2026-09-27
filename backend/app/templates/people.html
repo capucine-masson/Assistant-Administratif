@@ -23,6 +23,7 @@
         </div>
         {% if p.relation != 'moi' and not p.demarches %}
         <form method="post" action="/people/{{ p.id }}/delete" onsubmit="return confirm('Supprimer ?');">
+            <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
             <button class="text-slate-300 hover:text-red-500"><i data-lucide="trash" class="w-4 h-4"></i></button>
         </form>
         {% endif %}
@@ -35,6 +36,7 @@
         <i data-lucide="plus" class="w-4 h-4"></i> Ajouter une personne
     </h2>
     <form method="post" action="/people/new" class="flex items-center gap-2 flex-wrap">
+        <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
         <input type="text" name="name" required placeholder="Prénom" class="flex-1 min-w-[8rem] border border-slate-300 rounded-lg px-2 py-1.5">
         <select name="relation" class="shrink-0 border border-slate-300 rounded-lg px-2 py-1.5">
             <option value="conjoint">Conjoint(e)</option>

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ request.state.csrf_token }}">
     <title>{% block title %}Assistant Administratif{% endblock %}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -55,9 +56,12 @@
                 <i data-lucide="star" class="w-3.5 h-3.5"></i> {{ user.points_total }} pts · Niveau {{ user.level }}
             </span>
             <span class="text-sm text-slate-500 hidden sm:inline">{{ user.username }}</span>
-            <a href="/logout" class="flex items-center gap-1 text-sm text-slate-400 hover:text-red-500">
-                <i data-lucide="log-out" class="w-4 h-4"></i>
-            </a>
+            <form method="post" action="/logout">
+                <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
+                <button type="submit" class="flex items-center gap-1 text-sm text-slate-400 hover:text-red-500">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                </button>
+            </form>
         </div>
     </div>
 </nav>

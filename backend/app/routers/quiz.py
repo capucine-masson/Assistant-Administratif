@@ -6,6 +6,7 @@ from ..catalog import generate_demarches_for_profile
 from ..database import get_db
 from ..deps import get_current_user
 from ..models import Person
+from ..security import verify_csrf_form
 from ..templating import templates
 
 router = APIRouter()
@@ -21,7 +22,7 @@ def quiz_page(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(request, "quiz.html", {"user": user})
 
 
-@router.post("/quiz")
+@router.post("/quiz", dependencies=[Depends(verify_csrf_form)])
 def quiz_submit(
     request: Request,
     db: Session = Depends(get_db),

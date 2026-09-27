@@ -4,6 +4,7 @@ import json
 from sqlalchemy.orm import Session
 
 from .config import settings
+from .enums import DemarcheStatus, points_for_difficulty
 from .models import Category, Demarche, Person
 
 DEFAULT_CATEGORIES = {
@@ -103,12 +104,12 @@ def generate_demarches_for_profile(db: Session, user_id: int, person_id: int, pr
             title=entry["title"],
             description=entry.get("description", ""),
             detailed_guide=entry.get("detailed_guide", ""),
-            status="a_faire",
+            status=DemarcheStatus.A_FAIRE.value,
             difficulty=entry.get("difficulty", "moyen"),
             estimated_minutes=entry.get("estimated_minutes", 30),
             deadline=compute_deadline(entry.get("deadline_rule", {})),
             catalog_id=entry["id"],
-            points_reward=_points_for_difficulty(entry.get("difficulty", "moyen")),
+            points_reward=points_for_difficulty(entry.get("difficulty", "moyen")),
         )
         demarche.official_urls = entry.get("official_urls", [])
         demarche.steps = [{"label": s, "done": False} for s in entry.get("steps", [])]
@@ -117,7 +118,3 @@ def generate_demarches_for_profile(db: Session, user_id: int, person_id: int, pr
 
     db.flush()
     return created
-
-
-def _points_for_difficulty(difficulty: str) -> int:
-    return {"facile": 30, "moyen": 50, "difficile": 80}.get(difficulty, 50)

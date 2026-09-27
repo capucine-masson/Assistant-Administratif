@@ -5,6 +5,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..deps import resolve_user_or_redirect
 from ..models import Person
+from ..security import verify_csrf_form
 from ..templating import templates
 
 router = APIRouter()
@@ -20,7 +21,7 @@ def people_page(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(request, "people.html", {"user": user, "people": people})
 
 
-@router.post("/people/new")
+@router.post("/people/new", dependencies=[Depends(verify_csrf_form)])
 def create_person(
     request: Request,
     db: Session = Depends(get_db),
@@ -38,7 +39,7 @@ def create_person(
     return RedirectResponse("/people", status_code=303)
 
 
-@router.post("/people/{person_id}/delete")
+@router.post("/people/{person_id}/delete", dependencies=[Depends(verify_csrf_form)])
 def delete_person(person_id: int, request: Request, db: Session = Depends(get_db)):
     user, redirect = resolve_user_or_redirect(request, db)
     if redirect:

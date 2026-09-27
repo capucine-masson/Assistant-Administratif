@@ -11,6 +11,7 @@
     </p>
 
     <form method="post" action="/quiz" class="space-y-5">
+        <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
         <div class="grid grid-cols-2 gap-4">
             <div>
                 <label class="block text-sm font-medium mb-1">Âge</label>

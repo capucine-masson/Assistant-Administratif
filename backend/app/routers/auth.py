@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from ..database import get_db
 from ..deps import get_current_user
 from ..models import User
-from ..security import COOKIE_NAME, create_session_cookie
+from ..security import COOKIE_NAME, create_session_cookie, verify_csrf_form
 from ..templating import templates
 
 router = APIRouter()
@@ -19,7 +19,7 @@ def login_page(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse(request, "login.html", {})
 
 
-@router.post("/login")
+@router.post("/login", dependencies=[Depends(verify_csrf_form)])
 def login_submit(request: Request, username: str = Form(...), db: Session = Depends(get_db)):
     username = username.strip()
     if not username:
@@ -44,7 +44,7 @@ def login_submit(request: Request, username: str = Form(...), db: Session = Depe
     return response
 
 
-@router.get("/logout")
+@router.post("/logout", dependencies=[Depends(verify_csrf_form)])
 def logout():
     response = RedirectResponse("/login", status_code=303)
     response.delete_cookie(COOKIE_NAME)

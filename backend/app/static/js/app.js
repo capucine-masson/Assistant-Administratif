@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!list) return;
 
     const demarcheId = list.dataset.demarcheId;
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || "";
 
     list.querySelectorAll(".step-checkbox").forEach((checkbox) => {
         checkbox.addEventListener("change", async (event) => {
@@ -12,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             try {
                 const response = await fetch(`/demarches/${demarcheId}/step`, {
                     method: "POST",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                     body: JSON.stringify({ index }),
                 });
                 if (!response.ok) throw new Error("request failed");

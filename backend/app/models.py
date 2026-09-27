@@ -12,6 +12,7 @@ from sqlalchemy import (
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from .database import Base
+from .enums import Difficulty, DemarcheStatus
 
 
 def utcnow() -> datetime.datetime:
@@ -88,8 +89,8 @@ class Demarche(Base):
     official_urls_json: Mapped[str] = mapped_column(Text, default="[]")
     steps_json: Mapped[str] = mapped_column(Text, default="[]")
 
-    status: Mapped[str] = mapped_column(String(20), default="a_faire")  # a_faire | en_cours | terminee
-    difficulty: Mapped[str] = mapped_column(String(20), default="moyen")  # facile | moyen | difficile
+    status: Mapped[str] = mapped_column(String(20), default=DemarcheStatus.A_FAIRE.value)
+    difficulty: Mapped[str] = mapped_column(String(20), default=Difficulty.MOYEN.value)
     estimated_minutes: Mapped[int] = mapped_column(Integer, default=30)
     notes: Mapped[str] = mapped_column(Text, default="")
 
@@ -130,7 +131,7 @@ class Demarche(Base):
 
     @property
     def is_overdue(self) -> bool:
-        if not self.deadline or self.status == "terminee":
+        if not self.deadline or self.status == DemarcheStatus.TERMINEE.value:
             return False
         return self.deadline.date() < datetime.date.today()
 

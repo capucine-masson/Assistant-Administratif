@@ -9,6 +9,7 @@
     {% for c in categories %}
     <div class="bg-white rounded-2xl border border-slate-200 p-4">
         <form method="post" action="/categories/{{ c.id }}/edit" class="space-y-2">
+            <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
             <div class="flex items-center gap-2">
                 <span class="icon-preview flex items-center justify-center w-9 h-9 rounded-xl shrink-0"
                       style="background-color: {{ c.color }}1a; color: {{ c.color }};">
@@ -33,6 +34,7 @@
         {% if not c.demarches %}
         <form method="post" action="/categories/{{ c.id }}/delete" class="mt-2"
               onsubmit="return confirm('Supprimer cette catégorie ?');">
+            <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
             <button class="flex items-center gap-1 text-xs text-slate-400 hover:text-red-500">
                 <i data-lucide="trash" class="w-3.5 h-3.5"></i> Supprimer
             </button>
@@ -49,6 +51,7 @@
         <i data-lucide="plus" class="w-4 h-4"></i> Nouvelle catégorie
     </h2>
     <form method="post" action="/categories/new" class="space-y-2">
+        <input type="hidden" name="csrf_token" value="{{ request.state.csrf_token }}">
         <div class="flex items-center gap-2">
             <span id="new-icon-preview" class="icon-preview flex items-center justify-center w-9 h-9 rounded-xl shrink-0 bg-primary/10 text-primary">
                 <i data-lucide="folder" class="w-4 h-4"></i>

@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("chatbot-form");
     const input = document.getElementById("chatbot-input");
     const messages = document.getElementById("chatbot-messages");
+    const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content || "";
 
     if (!panel || !form) return;
 
@@ -32,13 +33,21 @@ document.addEventListener("DOMContentLoaded", function () {
         const card = document.createElement("a");
         card.href = demarche.url;
         card.className = "chat-bubble chat-bubble-bot block hover:border-primary/40";
-        card.innerHTML = `
-            <div class="flex items-center gap-2 text-primary font-medium">
-                <i data-lucide="circle-check-big" class="w-4 h-4"></i>
-                <span>${demarche.title}</span>
-            </div>
-            <div class="text-xs text-slate-400 mt-1">Voir la démarche →</div>
-        `;
+
+        const titleRow = document.createElement("div");
+        titleRow.className = "flex items-center gap-2 text-primary font-medium";
+        const icon = document.createElement("i");
+        icon.setAttribute("data-lucide", "circle-check-big");
+        icon.className = "w-4 h-4";
+        const titleSpan = document.createElement("span");
+        titleSpan.textContent = demarche.title;
+        titleRow.append(icon, titleSpan);
+
+        const linkHint = document.createElement("div");
+        linkHint.className = "text-xs text-slate-400 mt-1";
+        linkHint.textContent = "Voir la démarche →";
+
+        card.append(titleRow, linkHint);
         messages.appendChild(card);
         messages.scrollTop = messages.scrollHeight;
         if (window.lucide) lucide.createIcons();
@@ -61,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
         try {
             const response = await fetch("/chatbot/message", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { "Content-Type": "application/json", "X-CSRF-Token": csrfToken },
                 body: JSON.stringify({ message }),
             });
             const data = await response.json();

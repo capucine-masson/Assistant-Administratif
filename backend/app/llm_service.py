@@ -11,11 +11,14 @@ heuristique simple afin que l'application reste utilisable sans clé API.
 
 import datetime
 import json
+import logging
 import re
 
 import httpx
 
 from .config import settings
+
+logger = logging.getLogger(__name__)
 
 SYSTEM_PROMPT = (
     "Tu es un assistant expert des démarches administratives françaises. "
@@ -88,10 +91,10 @@ def _call_groq(prompt: str, system_prompt: str = SYSTEM_PROMPT) -> str | None:
         resp.raise_for_status()
         return resp.json()["choices"][0]["message"]["content"]
     except httpx.HTTPStatusError as exc:
-        print(f"[llm_service] Groq API error: HTTP {exc.response.status_code} — {exc.response.text[:200]}")
+        logger.warning("Groq API error: HTTP %s — %s", exc.response.status_code, exc.response.text[:200])
         return None
     except (httpx.HTTPError, KeyError, IndexError) as exc:
-        print(f"[llm_service] Groq call failed: {exc!r}")
+        logger.warning("Groq call failed: %r", exc)
         return None
 
 
@@ -114,9 +117,9 @@ def estimate_and_generate_guide(title: str, description: str) -> dict:
                 "estimated_minutes": int(parsed.get("estimated_minutes", 45) or 45),
                 "guide": parsed.get("guide", ""),
             }
-        print(f"[llm_service] Could not parse JSON from LLM response, falling back. Raw (200c): {raw[:200]!r}")
+        logger.warning("Could not parse JSON from LLM response, falling back. Raw (200c): %r", raw[:200])
     elif settings.LLM_PROVIDER != "none":
-        print(f"[llm_service] No response from provider '{settings.LLM_PROVIDER}', falling back to heuristic.")
+        logger.warning("No response from provider '%s', falling back to heuristic.", settings.LLM_PROVIDER)
 
     return _heuristic_estimate(title, description)
 
@@ -143,9 +146,9 @@ def extract_task_from_message(message: str, category_names: list[str]) -> dict:
                 "guide": parsed.get("guide", ""),
                 "deadline": parsed.get("deadline"),
             }
-        print(f"[llm_service] Could not parse chatbot JSON, falling back. Raw (200c): {raw[:200]!r}")
+        logger.warning("Could not parse chatbot JSON, falling back. Raw (200c): %r", raw[:200])
     elif settings.LLM_PROVIDER != "none":
-        print(f"[llm_service] No chatbot response from provider '{settings.LLM_PROVIDER}', falling back.")
+        logger.warning("No chatbot response from provider '%s', falling back.", settings.LLM_PROVIDER)
 
     base = _heuristic_estimate(message, "")
     return {

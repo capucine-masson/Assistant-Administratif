@@ -2,6 +2,7 @@ import datetime
 
 from sqlalchemy.orm import Session
 
+from .enums import DemarcheStatus
 from .models import Badge, Demarche, User
 
 BADGE_DEFINITIONS = {
@@ -16,7 +17,7 @@ def complete_demarche(db: Session, demarche: Demarche) -> dict:
     """Marque une démarche comme terminée, calcule les points et attribue
     les éventuels badges. Retourne un résumé pour affichage à l'utilisateur."""
     now = datetime.datetime.utcnow()
-    demarche.status = "terminee"
+    demarche.status = DemarcheStatus.TERMINEE.value
     demarche.completed_at = now
     if demarche.started_at is None:
         demarche.started_at = now
@@ -42,7 +43,7 @@ def complete_demarche(db: Session, demarche: Demarche) -> dict:
 
 def _check_badges(db: Session, user: User) -> list[Badge]:
     existing_codes = {b.code for b in user.badges}
-    completed = [d for d in user.demarches if d.status == "terminee"]
+    completed = [d for d in user.demarches if d.status == DemarcheStatus.TERMINEE.value]
     new_badges: list[Badge] = []
 
     def award(code: str):
