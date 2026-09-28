@@ -62,3 +62,8 @@ scraper/                       revisite les pages officielles pour détecter les
 ```
 
 Chaque démarche appartient à un utilisateur. Toutes les requêtes sont filtrées par cet utilisateur, y compris l'accès direct à une démarche par son URL.
+
+## Aperçu
+
+**Vue des démarches**
+![Vue des démarches](apercu/demarches.png)
