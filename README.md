@@ -1,111 +1,64 @@
-# 📋 Assistant de préparation administrative
+# Assistant Administratif
 
-Application web locale qui centralise mes démarches administratives (impôts, identité,
-permis/véhicule, CAF/APL, scolarité, santé, emploi...) : quizz de personnalisation à la
-première connexion, vue en colonnes par catégorie ou vue calendrier (mois / 6 mois /
-année), filtres par catégorie/personne/statut, guides détaillés générés par IA,
-assistant conversationnel pour créer une démarche en une phrase, et un petit système de
-points/récompenses.
+Décris ta situation, l'app s'occupe du reste : elle génère tes démarches administratives, te dit quoi faire et quand, et te guide étape par étape jusqu'au bout.
 
 ## Fonctionnalités
 
-- **Connexion factice** : un nom d'utilisateur suffit, pas de mot de passe.
-- **Quizz de première connexion** génère automatiquement les démarches pertinentes
-  (âge, situation familiale, logement, profession, permis/véhicule...).
-- **Vue liste** : démarches en colonnes par catégorie, tâches terminées repliées en bas
-  de chaque colonne.
-- **Vue calendrier** (FullCalendar) : mois, 6 mois, année ou liste, avec filtres.
-- **Catégories et personnes du foyer** : modifiables, pour trier/filtrer les démarches.
-- **Assistant IA** (bouton en bas à droite) : décrire une tâche en langage naturel crée
-  la démarche correspondante.
-- **Fiche démarche** : difficulté, temps estimé, deadline, étapes à cocher, liens
-  officiels, guide généré par IA.
-- **Récompenses** : points et niveaux selon les démarches complétées.
+- **Un quizz, tes démarches prêtes** — réponds à quelques questions (âge, logement, famille, profession...), l'app génère automatiquement les démarches qui te concernent
+- **Jamais perdu dans les papiers** — vue en colonnes par catégorie ou vue calendrier (mois, 6 mois, année), avec filtres par catégorie, personne ou statut
+- **Le bon guide, sans y penser** — chaque démarche a ses étapes, ses liens officiels et un guide détaillé généré par IA
+- **Dis-le en une phrase** — un assistant conversationnel crée la démarche correspondante à partir d'une simple description
+- **Un peu de motivation** — points et niveaux au fil des démarches complétées
+- **Ton espace, rien qu'à toi** — un identifiant = un espace privé, aucune donnée partagée entre utilisateurs
 
-## Stack technique
-
-- **Backend** : Python / FastAPI + SQLAlchemy + SQLite, rendu serveur Jinja2 (pas de build JS)
-- **Frontend** : Tailwind CSS (CDN) + JS vanilla + FullCalendar (CDN)
-- **Reverse proxy** : nginx, exposé sur `http://localhost:9090`
-- **Conteneurisation** : Docker / docker-compose
-- **IA** : Groq (cloud, gratuit) via `.env` — ou aucune IA (repli sur des règles simples)
-
-## Démarrage rapide
+## Lancer le projet
 
 ```bash
 cp .env.example .env
-# éditez .env : SECRET_KEY, et éventuellement une clé Groq (voir ci-dessous)
+# éditer .env : SECRET_KEY, et éventuellement une clé Groq (voir plus bas)
 
 docker compose up -d --build
 ```
 
-Ouvrez **http://localhost:9090**. Après une modification des templates/static/code
-Python, il faut rebuilder l'image backend :
+Ouvrir `http://localhost:9090`, se connecter avec l'identifiant de son choix (aucun mot de passe : la connexion sert uniquement à séparer les espaces de chacun).
 
-```bash
-docker compose build backend && docker compose up -d backend
-```
-
+Après une modification du code : `docker compose build backend && docker compose up -d backend`.
 Pour arrêter : `docker compose down` (les données restent dans `./data/app.db`).
 
-## Clé API Groq (optionnelle)
+### Clé API Groq (optionnelle)
 
-Sans clé (`LLM_PROVIDER=none` dans `.env`), l'appli reste pleinement fonctionnelle avec
-une estimation par règles simples pour la difficulté/le temps/le guide.
+Sans clé, l'appli reste fonctionnelle avec une estimation par règles simples. Avec une clé gratuite (console.groq.com → API Keys) :
 
-Avec une clé (gratuite) : créer un compte sur https://console.groq.com/ → **API Keys**
-→ **Create API Key**, puis dans `.env` :
 ```
 LLM_PROVIDER=groq
-GROQ_API_KEY=la_clé_copiée
+GROQ_API_KEY=ta_cle
 GROQ_MODEL=openai/gpt-oss-20b
 ```
-Si `GROQ_MODEL` n'existe plus (erreur `model_not_found` dans `docker compose logs backend`),
-lister les modèles disponibles :
-```bash
-curl -s https://api.groq.com/openai/v1/models -H "Authorization: Bearer VOTRE_CLE" | grep '"id"'
-```
 
-## Rafraîchir le catalogue de démarches (scraper)
+## Choix techniques
 
-`data/demarches_catalog.json` référence des pages officielles (service-public.fr,
-ants.gouv.fr, caf.fr, impots.gouv.fr, ameli.fr...). Le scraper revisite ces pages et
-signale celles dont le contenu a changé (procédure potentiellement mise à jour) :
+- **Backend** : FastAPI + SQLAlchemy + SQLite, rendu serveur Jinja2 (pas de build JS)
+- **Frontend** : Tailwind CSS (CDN) + JS vanilla + FullCalendar (CDN)
+- **Reverse proxy** : nginx (`http://localhost:9090`)
+- **Conteneurisation** : Docker / docker-compose
+- **IA (Groq)** : `openai/gpt-oss-20b` pour le guide de démarche et l'assistant conversationnel, avec repli heuristique si aucune clé n'est fournie
+- **Auth** : session signée, pas de vrai mot de passe — volontairement factice
+- **Multi-utilisateur** : chaque identifiant a son propre foyer (personnes, démarches, catégories)
 
-```bash
-docker compose --profile tools run --rm scraper
-```
-
-Il ne modifie jamais le contenu métier du catalogue (titres, catégories, étapes,
-guides) — uniquement les infos de veille (`scraped_info`).
-
-## Structure du projet
+## Architecture
 
 ```
-.
-├── docker-compose.yml
-├── .env.example / .env (secrets, non commité)
-├── data/demarches_catalog.json   # catalogue des démarches officielles
-├── nginx/templates/              # config nginx (reverse proxy → backend:8000)
-├── backend/app/
-│   ├── main.py                   # point d'entrée FastAPI
-│   ├── models.py                 # User, Person, Category, Demarche, Badge
-│   ├── catalog.py                # matching profil quizz ↔ catalogue
-│   ├── rewards.py                # points & badges
-│   ├── llm_service.py            # appel Groq + repli heuristique
-│   ├── routers/                  # auth, quiz, demarches, categories, people, rewards, calendar_api, chatbot
-│   ├── templates/                # pages Jinja2
-│   └── static/                   # css/js
-└── scraper/
-    ├── scrape_demarches.py
-    └── Dockerfile
+backend/app/
+├── main.py            point d'entrée FastAPI
+├── models.py          User, Person, Category, Demarche, Badge
+├── catalog.py         matching profil quizz ↔ catalogue de démarches
+├── rewards.py         points & badges
+├── llm_service.py     appel Groq + repli heuristique
+├── routers/           auth, quiz, demarches, categories, people, rewards, calendar_api, chatbot
+├── templates/         pages Jinja2
+└── static/            css/js
+data/demarches_catalog.json   catalogue des démarches officielles
+scraper/                       revisite les pages officielles pour détecter les mises à jour
 ```
 
-## Notes importantes
-
-- **Authentification factice** : aucune vérification de mot de passe, ne pas exposer
-  tel quel sur internet.
-- **Secrets** : tout est dans `.env` (jamais commité). Ne jamais mettre de vraie clé
-  dans `.env.example`.
-- Les données sont en SQLite dans `./data/app.db` (volume Docker persistant entre
-  rebuilds).
+Chaque démarche appartient à un utilisateur. Toutes les requêtes sont filtrées par cet utilisateur, y compris l'accès direct à une démarche par son URL.
